@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 const maintenanceSchema = new mongoose.Schema({
-    lease : { type: mongoose.Schema.Types.ObjectId, ref: "Lease", required: true },
-    tenant : { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    landlord : { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    lease : { type: mongoose.Schema.Types.ObjectId, ref: "Lease", required: true, index: true },
+    tenant : { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, index: true },
+    landlord : { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, index: true },
     title : { type: String, required: true },
     description : { type: String, required: true },
     urgency : { type: String, enum: ["low", "medium", "high"], default: "low" },

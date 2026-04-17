@@ -80,7 +80,7 @@ export const createRequest = async (req, res) => {
 
 export const myRequests = async (req, res) => {
   try {
-    const requests = await Maintenance.find({ tenant: req.user._id }).populate("lease");
+    const requests = await Maintenance.find({ tenant: req.user._id }).populate("lease").lean();
     res.json(requests);
   } catch (error) {
     console.error(error);
@@ -90,7 +90,7 @@ export const myRequests = async (req, res) => {
 
 export const landlordRequests = async (req, res) => {
   try {
-    const requests = await Maintenance.find({ landlord: req.user._id }).populate("lease").populate("tenant");
+    const requests = await Maintenance.find({ landlord: req.user._id }).populate("lease").populate("tenant").lean();
     res.json(requests);
   } catch (error) {
     res.status(500).json({ message: "Server error" });

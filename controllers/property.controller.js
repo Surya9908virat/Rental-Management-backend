@@ -39,7 +39,7 @@ export const createProperty = async (req, res) => {
 // Get All Available Properties (Public/Tenant)
 export const getAllProperties = async (req, res) => {
     try {
-        const properties = await Property.find({ status: "available" }).populate("landlord", "name email profilePicture phoneNumber upiId");
+        const properties = await Property.find({ status: "available" }).populate("landlord", "name email profilePicture phoneNumber upiId").lean();
         res.json(properties);
     } catch (error) {
         console.error("GET ALL PROPERTIES ERROR:", error);
@@ -50,7 +50,7 @@ export const getAllProperties = async (req, res) => {
 // Get All Properties for current Landlord
 export const getMyProperties = async (req, res) => {
     try {
-        const properties = await Property.find({ landlord: req.user._id });
+        const properties = await Property.find({ landlord: req.user._id }).lean();
         res.json(properties);
     } catch (error) {
         console.error("GET MY PROPERTIES ERROR:", error);

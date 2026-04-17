@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
       type: String,
       enum: ["landlord", "tenant"],
       required: true,
+      index: true,
     },
     upiId: { type: String, default: "" },
     phoneNumber: { type: String, default: "" },

@@ -7,8 +7,8 @@ const propertySchema = new mongoose.Schema(
         description: { type: String, default: "" },
         price: { type: Number, required: true, default: 0 },
         images: [{ type: String }],
-        landlord: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-        status: { type: String, enum: ["available", "rented"], default: "available" },
+        landlord: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, index: true },
+        status: { type: String, enum: ["available", "rented"], default: "available", index: true },
     },
     { timestamps: true }
 );
