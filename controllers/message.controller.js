@@ -37,7 +37,7 @@ export const getConversations = async (req, res) => {
     try {
         console.log(`FETCHING CONVERSATIONS for User: ${req.user._id}, Role: ${req.user.role}`);
         const query = req.user.role === 'landlord' ? { landlord: req.user._id } : { tenant: req.user._id };
-        const leases = await Lease.find(query).populate("property").populate(req.user.role === 'landlord' ? "tenant" : "landlord", "name");
+        const leases = await Lease.find(query).populate("property").populate(req.user.role === 'landlord' ? "tenant" : "landlord", "name").lean();
         
         // Group by user to ensure "user name only show once"
         const groupedMap = new Map();
@@ -89,7 +89,8 @@ export const getMessages = async (req, res) => {
         const { relationId } = req.params;
         const messages = await Message.find({ relationId })
             .populate("sender", "name role")
-            .sort({ createdAt: 1 });
+            .sort({ createdAt: 1 })
+            .lean();
         res.json(messages);
     } catch (error) {
         console.error("GET MESSAGES ERROR:", error);
@@ -112,7 +113,7 @@ export const searchUsers = async (req, res) => {
                     ]
                 }
             ]
-        }).select("name role email").limit(10);
+        }).select("name role email").limit(10).lean();
 
         res.json(users);
     } catch (error) {

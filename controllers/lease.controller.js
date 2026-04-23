@@ -94,7 +94,8 @@ export const getAvailableLeases = async (req, res) => {
   try {
     const leases = await Lease.find({ tenant: null, status: "pending" })
       .populate("property")
-      .populate("landlord", "name email upiId phoneNumber");
+      .populate("landlord", "name email upiId phoneNumber")
+      .lean();
     res.json(leases);
   } catch (error) {
     res.status(500).json({ message: "Failed to fetch available leases" });

@@ -105,7 +105,8 @@ export const myPayments = async (req, res) => {
         path: "lease",
         populate: { path: "landlord", select: "name email upiId phoneNumber" }
       })
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .lean();
     res.json(payments);
   } catch (error) {
     console.error(error);
@@ -118,7 +119,8 @@ export const landlordPayments = async (req, res) => {
     const payments = await Payment.find({ landlord: req.user._id })
       .populate("lease")
       .populate("tenant", "name email")
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .lean();
     res.json(payments);
   } catch (error) {
     res.status(500).json({ message: "Failed to fetch payments" });
